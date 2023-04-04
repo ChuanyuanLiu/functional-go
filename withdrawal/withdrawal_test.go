@@ -32,11 +32,25 @@ func TestCalculateFee(t *testing.T) {
 
 	t.Run("Withdrawal amount passes 2 tiers ", func(t *testing.T) {
 		fee := CalculateFee(time.Now(), pastWithdrawals, 1700)
-		assert.Equal(t, fee, 160)
+		assert.Equal(t, 150, fee)
 	})
 
 	t.Run("Reaches the maximum tier", func(t *testing.T) {
 		fee := CalculateFee(time.Now(), pastWithdrawals, 9000)
-		assert.Equal(t, fee, 360)
+		assert.Equal(t, 360, fee)
+	})
+
+	var pastWithdrawals2 = []Withdrawal{
+		{
+			UserID: 1,
+			Amount: 5000,
+			Status: Success,
+			Date:   time.Now(),
+		},
+	}
+
+	t.Run("Starts at the maximum tier", func(t *testing.T) {
+		fee := CalculateFee(time.Now(), pastWithdrawals2, 310)
+		assert.Equal(t, 15, fee)
 	})
 }
