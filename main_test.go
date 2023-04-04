@@ -44,7 +44,7 @@ func Test_transferHandle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		transferMockObj := transferMock.TestObj{}
-		// only mocking prepare and not transfer
+		// only mocking transfer and not prepare
 		transferMockObj.On("Transfer", tt.mockArg).Return(tt.mockReturn, tt.mockErr).Once()
 		handle := transferHandle(transferMockObj.Transfer, transfer.Prepare)
 
